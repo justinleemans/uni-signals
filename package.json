@@ -1,0 +1,12 @@
+{
+  "author": {
+    "name": "Justin Leemans"
+  },
+  "description": "Signals library for Unity",
+  "displayName": "Signals",
+  "keywords": [
+    "signals"
+  ],
+  "name": "com.justinleemans.signals",
+  "version": "1.0.0"
+}

@@ -5,12 +5,12 @@ namespace JeeLee.Signals
     public interface ISignalTransmitter
     {
         void Send<TSignal>()
-            where TSignal : class, ISignal;
+            where TSignal : Signal;
 
         void Send<TSignal>(TSignal signal)
-            where TSignal : class, ISignal;
+            where TSignal : Signal;
 
         TSignal GetSignal<TSignal>()
-            where TSignal : class, ISignal;
+            where TSignal : Signal;
     }
 }

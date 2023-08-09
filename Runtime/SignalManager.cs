@@ -19,14 +19,14 @@ namespace JeeLee.Signals
         }
 
         public void Send<TSignal>()
-            where TSignal : class, ISignal
+            where TSignal : Signal
         {
             TSignal signal = GetSignal<TSignal>();
             Send(signal);
         }
 
         public void Send<TSignal>(TSignal signal)
-            where TSignal : class, ISignal
+            where TSignal : Signal
         {
             Type type = signal.GetType();
 
@@ -44,13 +44,13 @@ namespace JeeLee.Signals
         }
 
         public TSignal GetSignal<TSignal>()
-            where TSignal : class, ISignal
+            where TSignal : Signal
         {
             return _signalPool.Get<TSignal>();
         }
 
         public void Subscribe<TSignal>(SignalHandler<TSignal> handler)
-            where TSignal : class, ISignal
+            where TSignal : Signal
         {
             if (!_signalSubscriptions.TryGetValue(typeof(TSignal), out var subscription))
             {
@@ -61,7 +61,7 @@ namespace JeeLee.Signals
         }
 
         public void Unsubscribe<TSignal>(SignalHandler<TSignal> handler)
-            where TSignal : class, ISignal
+            where TSignal : Signal
         {
             if (_signalSubscriptions.TryGetValue(typeof(TSignal), out var subscription))
             {

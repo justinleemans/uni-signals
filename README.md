@@ -58,21 +58,22 @@ manager.Unsubscribe<ExampleSignal>(OnExampleSignal);
 
 ## Creating signals
 
-All signals need to inherit from the `ISignal` interface. This interface doesn't have any added funtionality yet but this could change later on.
+All signals need to inherit from the abstract `Signal` class. This class is used identify and create signal classes which get used by this system.
 
 ```c#
-public class ExampleSignal : ISignal
+public class ExampleSignal : Signal
 {
 }
 ```
 
-One nice thing about this is that you can make other interfaces from this to extend functionality per signal. For example you could make an interface called `IAudioSignal` which itself inherits from `ISignal` which holds a string which references an audio clip. Then in your audio manager you can subscribe to `IAudioSignal` and get the identifier to play this sound. This way you don't have to subscribe to every signal with audio individually and attatching audio to a signal just became a whole lot easier.
+One nice thing about this is that you can make other classes from this to extend functionality per signal. For example you could make an abstract class called `AudioSignal` which itself inherits from `Signal`. On this class you can make an abstract property used to identify and audio asset. Then in your audio manager you can subscribe to `AudioSignal` and get the identifier property to play this sound. This way you don't have to subscribe to every signal with audio individually and attatching audio to a signal just became a whole lot easier.
 
-Each Signal that you create also needs to include the method `OnClear()`, this method is used internally when returning a signal back to the pool. In this method you can define what needs to happen with the variables stored on the signal when it gets cleared.
+The abstract class `Signal` also has a virtual method called `OnClear()` which can be used to define what happens when this signal gets returned to the internal pooling system.
 
 ```c#
 public void OnClear()
 {
+	Foo = default;
 }
 ```
 

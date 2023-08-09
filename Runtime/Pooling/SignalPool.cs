@@ -24,7 +24,7 @@ namespace JeeLee.Signals.Pooling
         public void Release<TSignal>(TSignal signal)
             where TSignal : ISignal
         {
-            signal.OnClear();
+            signal.Clear();
             
             AllocateInternalPool<TSignal>(out Queue<ISignal> queue);
 

@@ -2,6 +2,6 @@
 {
     public interface ISignal
     {
-        void OnClear();
+        void Clear();
     }
 }

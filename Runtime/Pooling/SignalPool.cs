@@ -16,7 +16,7 @@ namespace JeeLee.Signals.Pooling
         public TSignal Get<TSignal>()
             where TSignal : ISignal
         {
-            AllocInternalPool<TSignal>(out Queue<ISignal> queue);
+            AllocateInternalPool<TSignal>(out Queue<ISignal> queue);
 
             return queue.Count > 0 ? (TSignal)queue.Dequeue() : Activator.CreateInstance<TSignal>();
         }
@@ -24,12 +24,14 @@ namespace JeeLee.Signals.Pooling
         public void Release<TSignal>(TSignal signal)
             where TSignal : ISignal
         {
-            AllocInternalPool<TSignal>(out Queue<ISignal> queue);
+            signal.OnClear();
+            
+            AllocateInternalPool<TSignal>(out Queue<ISignal> queue);
 
             queue.Enqueue(signal);
         }
 
-        private Queue<ISignal> AllocInternalPool<TSignal>(out Queue<ISignal> queue)
+        private Queue<ISignal> AllocateInternalPool<TSignal>(out Queue<ISignal> queue)
         {
             if (!_signalPool.TryGetValue(typeof(TSignal), out queue))
             {

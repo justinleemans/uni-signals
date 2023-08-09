@@ -68,6 +68,14 @@ public class ExampleSignal : ISignal
 
 One nice thing about this is that you can make other interfaces from this to extend functionality per signal. For example you could make an interface called `IAudioSignal` which itself inherits from `ISignal` which holds a string which references an audio clip. Then in your audio manager you can subscribe to `IAudioSignal` and get the identifier to play this sound. This way you don't have to subscribe to every signal with audio individually and attatching audio to a signal just became a whole lot easier.
 
+Each Signal that you create also needs to include the method `OnClear()`, this method is used internally when returning a signal back to the pool. In this method you can define what needs to happen with the variables stored on the signal when it gets cleared.
+
+```c#
+public void OnClear()
+{
+}
+```
+
 # Contributing
 
 Currently I have no set way for people to contribute to this project. If you have any suggestions regarding improving on this project you can make a ticket on the GitHub repository or contact me directly.

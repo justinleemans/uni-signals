@@ -77,6 +77,22 @@ public void OnClear()
 }
 ```
 
+## Muting Signals
+
+Signals can be muted to prevent the subscribed handlers from being executed. This can be usefull to prevent signals from being send. For example when your app has disconnected from a server and should not execute certain signals.
+
+To mute a signal you can simply call `Mute<TSignal>()` with the signal type you want to mute.
+
+```c#
+manager.Mute<ExampleSignal>();
+```
+
+If you want all handlers of that type to start listening again you can simply unmute by calling `Unmute<TSignal>()` very similar as before.
+
+```c#
+manager.Unmute<ExampleSignal>();
+```
+
 # Contributing
 
 Currently I have no set way for people to contribute to this project. If you have any suggestions regarding improving on this project you can make a ticket on the GitHub repository or contact me directly.

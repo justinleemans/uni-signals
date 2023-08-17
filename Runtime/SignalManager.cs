@@ -10,7 +10,7 @@ namespace JeeLee.Signals
     /// <summary>
     /// General signals manager class. Implements methods from `ISignalTransmitter` and `ISignalReceiver` to create general signals workflow.
     /// </summary>
-    public class SignalManager : ISignalTransmitter, ISignalReceiver
+    public class SignalManager : ISignalTransmitter, ISignalReceiver, ISignalMuter
     {
         private readonly SignalPool _signalPool;
         private readonly Dictionary<Type, ISubscription> _signalSubscriptions;
@@ -93,6 +93,32 @@ namespace JeeLee.Signals
             if (_signalSubscriptions.TryGetValue(typeof(TSignal), out var subscription))
             {
                 ((Subscription<TSignal>)subscription).RemoveHandler(handler);
+            }
+        }
+
+        /// <summary>
+        /// Mutes all signal handlers from this type and prevents them from being invoked.
+        /// </summary>
+        /// <typeparam name="TSignal">The signal type to mute.</typeparam>
+        public void Mute<TSignal>()
+            where TSignal : Signal
+        {
+            if (_signalSubscriptions.TryGetValue(typeof(TSignal), out var subscription))
+            {
+                subscription.Muted = true;
+            }
+        }
+
+        /// <summary>
+        /// Unmutes all signal handlers from this type and allows them to be invoked again.
+        /// </summary>
+        /// <typeparam name="TSignal">The signal type to unmute</typeparam>
+        public void Unmute<TSignal>()
+            where TSignal : Signal
+        {
+            if (_signalSubscriptions.TryGetValue(typeof(TSignal), out var subscription))
+            {
+                subscription.Muted = false;
             }
         }
     }

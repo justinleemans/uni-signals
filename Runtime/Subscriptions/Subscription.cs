@@ -14,6 +14,8 @@ namespace JeeLee.Signals.Subscriptions
 
         private bool _processing;
 
+        public bool Muted { get; set; }
+
         public Subscription()
         {
             _handlers = new HashSet<SignalHandler<TSignal>>();
@@ -59,6 +61,11 @@ namespace JeeLee.Signals.Subscriptions
 
         public void Handle(TSignal signal)
         {
+            if (Muted)
+            {
+                return;
+            }
+            
             _processing = true;
 
             foreach (var handler in _handlers)

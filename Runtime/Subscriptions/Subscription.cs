@@ -13,8 +13,7 @@ namespace JeeLee.Signals.Subscriptions
         private readonly List<SignalHandler<TSignal>> _retroRemoveHandlers;
 
         private bool _processing;
-
-        public bool Muted { get; set; }
+        private bool _muted;
 
         public Subscription()
         {
@@ -61,7 +60,7 @@ namespace JeeLee.Signals.Subscriptions
 
         public void Handle(TSignal signal)
         {
-            if (Muted)
+            if (_muted)
             {
                 return;
             }
@@ -94,5 +93,19 @@ namespace JeeLee.Signals.Subscriptions
 
             _retroRemoveHandlers.Clear();
         }
+
+        #region ISubscription Members
+
+        public void Mute()
+        {
+            _muted = true;
+        }
+
+        public void Unmute()
+        {
+            _muted = false;
+        }
+
+        #endregion
     }
 }

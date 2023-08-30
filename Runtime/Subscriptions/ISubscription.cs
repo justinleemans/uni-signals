@@ -2,6 +2,7 @@
 {
     public interface ISubscription
     {
-        bool Muted { get; set; }
+        void Mute();
+        void Unmute();
     }
 }

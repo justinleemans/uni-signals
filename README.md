@@ -16,11 +16,27 @@ Currently the best way to include this package in your project is through the un
 
 To start using this library first you have to make an instance of the manager. This instance will be your central system through which to route all your signals.
 
+## Class instance
+
+To create a class instance of the signal manager simply create a new `SignalManager` class.
+
 ```c#
 SignalManager manager = new SignalManager();
 ```
 
 Note: you want to keep this instance as a single instance. Maybe keeping track of this instance on a central systems singleton or through dependency injection, since using different instances of this manager will mean that subscribtions and sending will be divided over these instances.
+
+## Singleton
+
+You can also opt for the included singleton manager. This will use a game object in your scene instead of a native class instance. You can simply access the `Instance` property of the class `SignalMonoManager` to get the singleton to work. This will automatically create a new game object in your scene and add the class to it.
+
+Alternativly you can choose to create a new game object in your scene yourself and add the `SignalMonoManager` component to it. This is especially helpfull if you want to change some other properties of the object before using it.
+
+Instead of storing the instance in a variable you can now access the manager everywhere through the `Instance` property.
+
+```c#
+SignalMonoManager.Instance.Send<ExampleSignal>();
+```
 
 ## Sending
 

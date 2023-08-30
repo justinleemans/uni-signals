@@ -10,7 +10,7 @@ namespace JeeLee.Signals
     /// <summary>
     /// General signals manager class. Implements methods from `ISignalTransmitter` and `ISignalReceiver` to create general signals workflow.
     /// </summary>
-    public class SignalManager : ISignalTransmitter, ISignalReceiver, ISignalMuter
+    public sealed class SignalManager : ISignalTransmitter, ISignalReceiver, ISignalMuter
     {
         private readonly SignalPool _signalPool;
         private readonly Dictionary<Type, ISubscription> _signalSubscriptions;

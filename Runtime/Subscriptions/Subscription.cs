@@ -27,7 +27,7 @@ namespace JeeLee.Signals.Subscriptions
         {
             if (handler == null)
             {
-                throw new NullReferenceException();
+                throw new NullReferenceException("Handler cannot be null");
             }
 
             if (!_processing)
@@ -45,7 +45,7 @@ namespace JeeLee.Signals.Subscriptions
         {
             if (handler == null)
             {
-                throw new NullReferenceException();
+                throw new NullReferenceException("Handler cannot be null");
             }
 
             if (!_processing)

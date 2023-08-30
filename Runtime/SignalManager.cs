@@ -9,6 +9,7 @@ namespace JeeLee.Signals
 {
     /// <summary>
     /// General signals manager class. Implements methods from `ISignalTransmitter` and `ISignalReceiver` to create general signals workflow.
+    /// Also adds ISignalMuter to allow for signal handling to be paused.
     /// </summary>
     public sealed class SignalManager : ISignalTransmitter, ISignalReceiver, ISignalMuter
     {

@@ -8,6 +8,11 @@ using UnityEngine;
 
 namespace JeeLee.Signals
 {
+    /// <summary>
+    /// Singleton signals manager class. Implements methods from `ISignalTransmitter` and `ISignalReceiver` to create general signals workflow.
+    /// Also adds ISignalMuter to allow for signal handling to be paused.
+    /// This version of the signals manager is build using a MonoBehaviour to be used as a singleton game object.
+    /// </summary>
     public sealed class SignalMonoManager : MonoBehaviour, ISignalTransmitter, ISignalReceiver, ISignalMuter
     {
         private static SignalMonoManager _instance;
@@ -15,6 +20,9 @@ namespace JeeLee.Signals
         private SignalPool _signalPool;
         private Dictionary<Type, ISubscription> _signalSubscriptions;
 
+        /// <summary>
+        /// The static instance of the singleton signals manager.
+        /// </summary>
         public static SignalMonoManager Instance => _instance ??= CreateInstance();
 
         private void Awake()

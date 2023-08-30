@@ -115,7 +115,7 @@ namespace JeeLee.Signals
         {
             if (_signalSubscriptions.TryGetValue(typeof(TSignal), out var subscription))
             {
-                subscription.Muted = true;
+                subscription.Mute();
             }
         }
 
@@ -128,7 +128,7 @@ namespace JeeLee.Signals
         {
             if (_signalSubscriptions.TryGetValue(typeof(TSignal), out var subscription))
             {
-                subscription.Muted = false;
+                subscription.Unmute();
             }
         }
 

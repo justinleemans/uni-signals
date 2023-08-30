@@ -21,6 +21,8 @@ namespace JeeLee.Signals
             _signalSubscriptions = new Dictionary<Type, ISubscription>();
         }
 
+        #region ISignalTransmitter Members
+
         /// <summary>
         /// Sends a new instance of this signal without setting properties.
         /// </summary>
@@ -66,6 +68,10 @@ namespace JeeLee.Signals
             return _signalPool.Get<TSignal>();
         }
 
+        #endregion
+
+        #region ISignalReceiver Members
+
         /// <summary>
         /// Subscribe a given method to signals of this type.
         /// </summary>
@@ -96,6 +102,10 @@ namespace JeeLee.Signals
             }
         }
 
+        #endregion
+
+        #region ISignalMuter Members
+
         /// <summary>
         /// Mutes all signal handlers from this type and prevents them from being invoked.
         /// </summary>
@@ -121,5 +131,7 @@ namespace JeeLee.Signals
                 subscription.Muted = false;
             }
         }
+
+        #endregion
     }
 }

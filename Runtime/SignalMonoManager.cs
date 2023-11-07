@@ -17,8 +17,7 @@ namespace JeeLee.Signals
     {
         private static SignalMonoManager _instance;
 
-        private SignalPool _signalPool;
-        private Dictionary<Type, ISubscription> _signalSubscriptions;
+        private SignalManager _signalManager;
 
         /// <summary>
         /// The static instance of the singleton signals manager.
@@ -41,8 +40,7 @@ namespace JeeLee.Signals
 
         private void Initialize()
         {
-            _signalPool = new SignalPool();
-            _signalSubscriptions = new Dictionary<Type, ISubscription>();
+            _signalManager = new SignalManager();
         }
 
         private static SignalMonoManager CreateInstance()
@@ -61,11 +59,7 @@ namespace JeeLee.Signals
         /// </summary>
         /// <typeparam name="TSignal">The type of signal to be send.</typeparam>
         public void Send<TSignal>()
-            where TSignal : Signal
-        {
-            TSignal signal = GetSignal<TSignal>();
-            Send(signal);
-        }
+            where TSignal : Signal => _signalManager.Send<TSignal>();
 
         /// <summary>
         /// Sends a signal of the given instance. Properties can be set before hand.
@@ -73,22 +67,7 @@ namespace JeeLee.Signals
         /// <typeparam name="TSignal">The type of signal to be send.</typeparam>
         /// <param name="signal">The signal instance to be send.</param>
         public void Send<TSignal>(TSignal signal)
-            where TSignal : Signal
-        {
-            Type type = signal.GetType();
-
-            while (type != null)
-            {
-                if (typeof(ISignal).IsAssignableFrom(type) && _signalSubscriptions.TryGetValue(type, out var subscription))
-                {
-                    ((Subscription<TSignal>)subscription).Handle(signal);
-                }
-
-                type = type.BaseType;
-            }
-
-            _signalPool.Release(signal);
-        }
+            where TSignal : Signal => _signalManager.Send<TSignal>(signal);
 
         /// <summary>
         /// Allocates a signal instance of the given type.
@@ -96,10 +75,7 @@ namespace JeeLee.Signals
         /// <typeparam name="TSignal">The signal type to allocate.</typeparam>
         /// <returns>An instance of the signal of the requested type.</returns>
         public TSignal GetSignal<TSignal>()
-            where TSignal : Signal
-        {
-            return _signalPool.Get<TSignal>();
-        }
+            where TSignal : Signal => _signalManager.GetSignal<TSignal>();
 
         #endregion
 
@@ -111,15 +87,7 @@ namespace JeeLee.Signals
         /// <typeparam name="TSignal">The signal type to subscribe to.</typeparam>
         /// <param name="handler">The method to be called when this signal is fired.</param>
         public void Subscribe<TSignal>(SignalHandler<TSignal> handler)
-            where TSignal : Signal
-        {
-            if (!_signalSubscriptions.TryGetValue(typeof(TSignal), out var subscription))
-            {
-                _signalSubscriptions.Add(typeof(TSignal), subscription = new Subscription<TSignal>());
-            }
-
-            ((Subscription<TSignal>)subscription).AddHandler(handler);
-        }
+            where TSignal : Signal => _signalManager.Subscribe<TSignal>(handler);
 
         /// <summary>
         /// Unsubscribe a given method from signals of this type.
@@ -127,13 +95,7 @@ namespace JeeLee.Signals
         /// <typeparam name="TSignal">The signal type to unscubscribe from.</typeparam>
         /// <param name="handler">The method which needs to be unsubscribed.</param>
         public void Unsubscribe<TSignal>(SignalHandler<TSignal> handler)
-            where TSignal : Signal
-        {
-            if (_signalSubscriptions.TryGetValue(typeof(TSignal), out var subscription))
-            {
-                ((Subscription<TSignal>)subscription).RemoveHandler(handler);
-            }
-        }
+            where TSignal : Signal => _signalManager.Unsubscribe<TSignal>(handler);
 
         #endregion
 
@@ -144,26 +106,14 @@ namespace JeeLee.Signals
         /// </summary>
         /// <typeparam name="TSignal">The signal type to mute.</typeparam>
         public void Mute<TSignal>()
-            where TSignal : Signal
-        {
-            if (_signalSubscriptions.TryGetValue(typeof(TSignal), out var subscription))
-            {
-                subscription.Mute();
-            }
-        }
+            where TSignal : Signal => _signalManager.Mute<TSignal>();
 
         /// <summary>
         /// Unmutes all signal handlers from this type and allows them to be invoked again.
         /// </summary>
         /// <typeparam name="TSignal">The signal type to unmute</typeparam>
         public void Unmute<TSignal>()
-            where TSignal : Signal
-        {
-            if (_signalSubscriptions.TryGetValue(typeof(TSignal), out var subscription))
-            {
-                subscription.Unmute();
-            }
-        }
+            where TSignal : Signal => _signalManager.Unmute<TSignal>();
 
         #endregion
     }

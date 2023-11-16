@@ -22,6 +22,44 @@ namespace JeeLee.Signals.Subscriptions
             _retroRemoveHandlers = new List<SignalHandler<TSignal>>();
         }
 
+        #region ISubscription Members
+
+        public void Handle(ISignal signal)
+        {
+            if (!typeof(ISignal).IsAssignableFrom(typeof(TSignal)))
+            {
+                throw new InvalidCastException();
+            }
+
+            if (_muted)
+            {
+                return;
+            }
+
+            _processing = true;
+
+            foreach (var handler in _handlers)
+            {
+                handler?.Invoke((TSignal)signal);
+            }
+
+            _processing = false;
+
+            ProcessHandlerQueues();
+        }
+
+        public void Mute()
+        {
+            _muted = true;
+        }
+
+        public void Unmute()
+        {
+            _muted = false;
+        }
+
+        #endregion
+
         public void AddHandler(SignalHandler<TSignal> handler)
         {
             if (handler == null)
@@ -58,25 +96,6 @@ namespace JeeLee.Signals.Subscriptions
             }
         }
 
-        public void Handle(TSignal signal)
-        {
-            if (_muted)
-            {
-                return;
-            }
-            
-            _processing = true;
-
-            foreach (var handler in _handlers)
-            {
-                handler?.Invoke(signal);
-            }
-
-            _processing = false;
-
-            ProcessHandlerQueues();
-        }
-
         private void ProcessHandlerQueues()
         {
             foreach (var handler in _retroAddHandlers)
@@ -93,19 +112,5 @@ namespace JeeLee.Signals.Subscriptions
 
             _retroRemoveHandlers.Clear();
         }
-
-        #region ISubscription Members
-
-        public void Mute()
-        {
-            _muted = true;
-        }
-
-        public void Unmute()
-        {
-            _muted = false;
-        }
-
-        #endregion
     }
 }

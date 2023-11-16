@@ -49,7 +49,7 @@ namespace JeeLee.Signals
             {
                 if (typeof(ISignal).IsAssignableFrom(type) && _signalSubscriptions.TryGetValue(type, out var subscription))
                 {
-                    ((Subscription<TSignal>)subscription).Handle(signal);
+                    subscription.Handle(signal);
                 }
                 
                 type = type.BaseType;

@@ -13,12 +13,12 @@ namespace JeeLee.Signals
     /// </summary>
     public sealed class SignalManager : ISignalTransmitter, ISignalReceiver, ISignalMuter
     {
-        private readonly SignalPool _signalPool;
+        private readonly Dictionary<Type, IPool> _signalPools;
         private readonly Dictionary<Type, ISubscription> _signalSubscriptions;
 
         public SignalManager()
         {
-            _signalPool = new SignalPool();
+            _signalPools = new Dictionary<Type, IPool>();
             _signalSubscriptions = new Dictionary<Type, ISubscription>();
         }
 
@@ -55,7 +55,7 @@ namespace JeeLee.Signals
                 type = type.BaseType;
             }
 
-            _signalPool.Release(signal);
+            AllocatePool<TSignal>().Release(signal);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace JeeLee.Signals
         public TSignal GetSignal<TSignal>()
             where TSignal : Signal
         {
-            return _signalPool.Get<TSignal>();
+            return AllocatePool<TSignal>().Get();
         }
 
         #endregion
@@ -81,12 +81,7 @@ namespace JeeLee.Signals
         public void Subscribe<TSignal>(SignalHandler<TSignal> handler)
             where TSignal : Signal
         {
-            if (!_signalSubscriptions.TryGetValue(typeof(TSignal), out var subscription))
-            {
-                _signalSubscriptions.Add(typeof(TSignal), subscription = new Subscription<TSignal>());
-            }
-
-            ((Subscription<TSignal>)subscription).AddHandler(handler);
+            AllocateSubscription<TSignal>().AddHandler(handler);
         }
 
         /// <summary>
@@ -97,10 +92,7 @@ namespace JeeLee.Signals
         public void Unsubscribe<TSignal>(SignalHandler<TSignal> handler)
             where TSignal : Signal
         {
-            if (_signalSubscriptions.TryGetValue(typeof(TSignal), out var subscription))
-            {
-                ((Subscription<TSignal>)subscription).RemoveHandler(handler);
-            }
+            AllocateSubscription<TSignal>().RemoveHandler(handler);
         }
 
         #endregion
@@ -114,10 +106,7 @@ namespace JeeLee.Signals
         public void Mute<TSignal>()
             where TSignal : Signal
         {
-            if (_signalSubscriptions.TryGetValue(typeof(TSignal), out var subscription))
-            {
-                subscription.Mute();
-            }
+            AllocateSubscription<TSignal>().Mute();
         }
 
         /// <summary>
@@ -127,12 +116,31 @@ namespace JeeLee.Signals
         public void Unmute<TSignal>()
             where TSignal : Signal
         {
-            if (_signalSubscriptions.TryGetValue(typeof(TSignal), out var subscription))
-            {
-                subscription.Unmute();
-            }
+            AllocateSubscription<TSignal>().Unmute();
         }
 
         #endregion
+
+        private Pool<TSignal> AllocatePool<TSignal>()
+            where TSignal : Signal
+        {
+            if(!_signalPools.TryGetValue(typeof(TSignal), out var pool))
+            {
+                _signalPools.Add(typeof(TSignal), pool = new Pool<TSignal>());
+            }
+            
+            return (Pool<TSignal>)pool;
+        }
+
+        private Subscription<TSignal> AllocateSubscription<TSignal>()
+            where TSignal : Signal
+        {
+            if (!_signalSubscriptions.TryGetValue(typeof(TSignal), out var subscription))
+            {
+                _signalSubscriptions.Add(typeof(TSignal), subscription = new Subscription<TSignal>());
+            }
+
+            return (Subscription<TSignal>)subscription;
+        }
     }
 }

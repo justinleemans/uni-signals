@@ -16,7 +16,7 @@ namespace JeeLee.Signals.Domain
         /// <summary>
         /// Method used to define what needs to happen to a signal when it gets reset for future use.
         /// </summary>
-        public virtual void OnClear()
+        protected virtual void OnClear()
         {
         }
     }

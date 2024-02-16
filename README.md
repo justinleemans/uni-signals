@@ -10,7 +10,7 @@ A simple straight forward signals library for Unity. Send a signal from anywhere
 
 # Installation
 
-Currently the best way to include this package in your project is through the unity package manager. Add the package using the git URL of this repo: https://github.com/justinleemans/signals
+Currently the best way to include this package in your project is through the unity package manager. Add the package using the git URL of this repo: https://github.com/justinleemans/signals.git
 
 # Quick Start
 

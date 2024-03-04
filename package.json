@@ -1,7 +1,7 @@
 {
-  "name": "com.justinleemans.signals",
+  "name": "com.justinleemans.uni-signals",
   "version": "1.1.2",
-  "displayName": "Signals",
+  "displayName": "UniSignals",
   "description": "Signals library for Unity",
   "author": {
     "name": "Justin Leemans"

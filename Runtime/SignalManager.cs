@@ -1,11 +1,11 @@
-using JeeLee.Signals.Delegates;
-using JeeLee.Signals.Domain;
-using JeeLee.Signals.Pooling;
-using JeeLee.Signals.Subscriptions;
+using JeeLee.UniSignals.Delegates;
+using JeeLee.UniSignals.Domain;
+using JeeLee.UniSignals.Pooling;
+using JeeLee.UniSignals.Subscriptions;
 using System;
 using System.Collections.Generic;
 
-namespace JeeLee.Signals
+namespace JeeLee.UniSignals
 {
     /// <summary>
     /// General signals manager class. Implements methods from `ISignalTransmitter` and `ISignalReceiver` to create general signals workflow.

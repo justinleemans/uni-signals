@@ -1,7 +1,7 @@
-using JeeLee.Signals.Delegates;
-using JeeLee.Signals.Domain;
+using JeeLee.UniSignals.Delegates;
+using JeeLee.UniSignals.Domain;
 
-namespace JeeLee.Signals
+namespace JeeLee.UniSignals
 {
     /// <summary>
     /// Interface used to access all signal receiver methods of the signals system.

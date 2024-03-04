@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using JeeLee.Signals.Domain;
+using JeeLee.UniSignals.Domain;
 
-namespace JeeLee.Signals.Pooling
+namespace JeeLee.UniSignals.Pooling
 {
     public class Pool<TSignal> : IPool
         where TSignal : ISignal

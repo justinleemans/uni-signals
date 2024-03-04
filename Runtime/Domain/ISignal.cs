@@ -1,4 +1,4 @@
-﻿namespace JeeLee.Signals.Domain
+﻿namespace JeeLee.UniSignals.Domain
 {
     /// <summary>
     /// Signal interface, used internally by the signal system. To make instances of a signal you should inherit from `Signal` instead.

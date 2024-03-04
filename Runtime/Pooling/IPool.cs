@@ -1,4 +1,4 @@
-namespace JeeLee.Signals.Pooling
+namespace JeeLee.UniSignals.Pooling
 {
     public interface IPool
     {

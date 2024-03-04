@@ -1,6 +1,6 @@
 {
-    "name": "Signals",
-    "rootNamespace": "JeeLee.Signals",
+    "name": "UniSignals",
+    "rootNamespace": "JeeLee.UniSignals",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

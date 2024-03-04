@@ -1,4 +1,4 @@
-# Signals - Signals library for Unity
+# UniSignals - Signals library for Unity
 
 A simple straight forward signals library for Unity. Send a signal from anywhere in your project and let other classes freely capture and respond to the event.
 
@@ -10,7 +10,7 @@ A simple straight forward signals library for Unity. Send a signal from anywhere
 
 # Installation
 
-Currently the best way to include this package in your project is through the unity package manager. Add the package using the git URL of this repo: https://github.com/justinleemans/signals.git
+Currently the best way to include this package in your project is through the unity package manager. Add the package using the git URL of this repo: https://github.com/justinleemans/uni-signals.git
 
 # Quick Start
 

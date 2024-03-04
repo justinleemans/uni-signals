@@ -1,6 +1,6 @@
-using JeeLee.Signals.Domain;
+using JeeLee.UniSignals.Domain;
 
-namespace JeeLee.Signals
+namespace JeeLee.UniSignals
 {
     /// <summary>
     /// Interface used to access all signal transmission methods of the signals system.

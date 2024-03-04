@@ -1,9 +1,9 @@
-﻿using JeeLee.Signals.Delegates;
-using JeeLee.Signals.Domain;
+﻿using JeeLee.UniSignals.Delegates;
+using JeeLee.UniSignals.Domain;
 using System;
 using System.Collections.Generic;
 
-namespace JeeLee.Signals.Subscriptions
+namespace JeeLee.UniSignals.Subscriptions
 {
     public class Subscription<TSignal> : ISubscription
         where TSignal : ISignal

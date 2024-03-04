@@ -1,6 +1,6 @@
-﻿using JeeLee.Signals.Domain;
+﻿using JeeLee.UniSignals.Domain;
 
-namespace JeeLee.Signals.Subscriptions
+namespace JeeLee.UniSignals.Subscriptions
 {
     public interface ISubscription
     {

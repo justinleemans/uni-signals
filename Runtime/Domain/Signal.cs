@@ -1,4 +1,4 @@
-namespace JeeLee.Signals.Domain
+namespace JeeLee.UniSignals.Domain
 {
     /// <summary>
     /// Abstract signal class used to define signals.

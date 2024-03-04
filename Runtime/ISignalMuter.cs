@@ -1,6 +1,6 @@
-using JeeLee.Signals.Domain;
+using JeeLee.UniSignals.Domain;
 
-namespace JeeLee.Signals
+namespace JeeLee.UniSignals
 {
     /// <summary>
     /// Interface used to allow signals to be muted by type.
